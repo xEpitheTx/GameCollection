@@ -44,11 +44,18 @@ namespace GameCollection
 
         private void UpdateGameCollectionText()
         {
+            int gameCount = 0;
             gameCollectionTextBox.Clear();
             foreach (Game game in gameDictionary.Values)
             {
                 gameCollectionTextBox.Text += $"{game.Title}, {Enum.GetName(typeof(Enums.Genre), game.Genre)}, " +
                     $"{Enum.GetName(typeof(Enums.Rating), game.Rating)}, ${game.Price} {Environment.NewLine}";
+                gameCollectionBrowse.Rows.Add();
+                gameCollectionBrowse[0, gameCount].Value = game.Title;
+                gameCollectionBrowse[1, gameCount].Value = game.Genre;
+                gameCollectionBrowse[2, gameCount].Value = game.Rating;
+                gameCollectionBrowse[3, gameCount].Value = game.Price;
+                gameCount++;
             }
         }
 
