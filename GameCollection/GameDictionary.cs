@@ -10,10 +10,5 @@ namespace GameCollection
         {
             gameDictionary = new Dictionary<string, Game>();
         }
-
-        public void AddGame(Game gameToAdd)
-        {
-            gameDictionary.Add(gameToAdd.Title, gameToAdd);
-        }
     }
 }

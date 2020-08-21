@@ -31,9 +31,21 @@ namespace GameCollection
             UpdateGameCollectionText();
             SaveDictionary();
         }
-        public void AddGame(Game newGame)
+        public void AddGame()
         {
-            gameDictionary.Add(newGame.Title, newGame);
+            foreach (DataGridViewRow gameCollection in gameCollectionBrowse.Rows)
+            {
+                if (gameCollection.Cells[0].Value != null)
+                {
+                    if (!gameDictionary.ContainsKey(gameCollection.Cells[1].ToString()))
+                    {
+                        gameDictionary.Add(gameCollection.Cells[0].ToString(), new Game(gameCollection.Cells[0].Value.ToString(),
+                            (Enums.Genre)gameCollection.Cells[1].Value, (Enums.Rating)gameCollection.Cells[2].Value,
+                            Convert.ToInt32(gameCollection.Cells[3].Value)));
+                    }
+                }
+
+            }
         }
 
         private void CreateObjects()
@@ -45,11 +57,8 @@ namespace GameCollection
         private void UpdateGameCollectionText()
         {
             int gameCount = 0;
-            gameCollectionTextBox.Clear();
             foreach (Game game in gameDictionary.Values)
             {
-                gameCollectionTextBox.Text += $"{game.Title}, {Enum.GetName(typeof(Enums.Genre), game.Genre)}, " +
-                    $"{Enum.GetName(typeof(Enums.Rating), game.Rating)}, ${game.Price} {Environment.NewLine}";
                 gameCollectionBrowse.Rows.Add();
                 gameCollectionBrowse[0, gameCount].Value = game.Title;
                 gameCollectionBrowse[1, gameCount].Value = game.Genre;
@@ -76,6 +85,16 @@ namespace GameCollection
         {
             string json = File.ReadAllText("gameCollection.dat");
             gameDictionary = JsonConvert.DeserializeObject<Dictionary<string, Game>>(json);
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveDictionary();
+        }
+
+        private void addGamesToDictionary_Click(object sender, EventArgs e)
+        {
+            AddGame();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace GameCollection
         {
             
             Form1 form1 = Owner as Form1;
-            form1.AddGame(AddGame());
+            //form1.AddGame(AddGame());
             MessageBox.Show("Game saved");
             ClearForm();
         }
